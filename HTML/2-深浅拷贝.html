@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function deepCopy(target, source) {
+            for (var key in source) {
+                var item = source[key];
+
+                // 判断是否为数组
+                if (item instanceof Array) {
+                    target[key] = [];
+                    deepCopy(target[key], item);
+                } else if (item instanceof Object) {
+                    // 判断是否为对象
+                    target[key] = {};
+                    deepCopy(target[key], item);
+                } else {
+                    target[key] = item;
+                }
+            }
+        }
+
+        var obj = {
+            a: 10,
+            b: 20,
+            info: {
+                c: 30
+            }
+        }
+
+        var target = {}
+
+        for (var key in obj) {
+            target[key] = obj[key];
+        }
+
+        // console.log(target);    // {a:10, b:20, info:{c:30}}
+        // target.info.c = 100;
+        // console.log(obj.info.c);    // 100
+
+        deepCopy(target, obj);
+        console.log(target);
+        console.log(target.info === obj.info);
+    </script>
+</body>
+
+</html>

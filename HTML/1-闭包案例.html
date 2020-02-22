@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <ul class="nav">
+        <li>北京</li>
+        <li>上海</li>
+        <li>广东</li>
+    </ul>
+
+    <script>
+        var lis = document.querySelector('ul.nav').querySelectorAll('li');
+
+        // 1 单击 li 打印每个 li 的序号
+
+        /* 思路一 动态添加属性
+        for(var i = 0; i < lis.length; i++) {
+            lis[i].index = i;
+            lis[i].onclick = function () {
+                console.log(this.index);
+            }
+        }*/
+
+        /* 思路二 闭包实现
+        for(var i = 0; i < lis.length; i++) {
+            (function (i) {
+                lis[i].onclick = function () {
+                    console.log(i);        
+                }
+            })(i);
+        }*/
+
+        /* 思路三 es6 let 语法
+        for(let i = 0; i < lis.length; i++) {
+            lis[i].onclick = function() {
+                console.log(i);
+            }
+        }*/
+
+        // 2 三秒后打印每个城市
+        /* 思路一 es6 let 语法
+        for(let i = 0; i < lis.length; i++) {
+            setTimeout(function() {
+                console.log(lis[i].innerHTML);
+            },3000)
+        }*/
+
+        /* 思路二 闭包实现
+        for(var i = 0; i < lis.length; i++) {
+            (function(i) {
+                setTimeout(function() {
+                    console.log(lis[i].innerHTML);
+                }, 3000)
+            })(i);
+        }*/
+
+        // 3 公里内 14元/公里 每增加 1 公里收 5 元
+        // 堵车 在原来收费上多收 5 元
+        // var c = (function() {
+        //     var base = 14;
+        //     var sum = 0;
+        //     return {
+        //         normal: function(n) {
+        //             if (n <= 3) {
+        //                 sum = base;
+        //             } else {
+        //                 sum = base + (n - 3) * 5
+        //             }
+        //             return sum;
+        //         },
+        //         trafficJam: function(falg) {
+        //             return falg ? sum + 5 : sum;
+        //         }
+        //     }
+        // })();
+        // c.normal(5);
+        // console.log(c.trafficJam(true));
+    </script>
+</body>
+
+</html>

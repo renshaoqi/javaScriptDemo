@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>正则表达式作业</title>
+    <style>
+        .input input {
+            width: 285px;
+            height: 35px;
+        }
+
+        button {
+            width: 235px;
+            height: 40px;
+            color: white;
+            background-color: red;
+            border: none;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+        a {
+            text-decoration: none;
+            color:#1793E0; 
+        }
+    </style>
+</head>
+
+<body>
+
+    <table>
+        <tr>
+            <td>手机号:</td>
+            <td class="input">
+                <input type="text" class="phone">
+                <span></span>
+            </td>
+        </tr>
+        <tr>
+            <td>QQ:</td>
+            <td class="input">
+                <input type="text" class="qq">
+                <span></span>
+            </td>
+        </tr>
+        <tr>
+            <td>昵称:</td>
+            <td class="input">
+                <input type="text" class="nicheng">
+                <span></span>
+            </td>
+        </tr>
+        <tr>
+            <td>短信验证码:</td>
+            <td class="input">
+                <input type="text" class="yzm">
+                <span></span>
+            </td>
+        </tr>
+        <tr>
+            <td>登录密码:</td>
+            <td class="input">
+                <input type="password" class="loginPassword">
+                <span></span>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>安全程度</td>
+        </tr>
+        <tr>
+            <td>确认密码:</td>
+            <td class="input">
+                <input type="password" class="conPassword">
+                <span></span>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <input type="checkbox" class="deal">
+                同意协议并注册<a href="#">《知果果用户协议》</a>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button>完成注册</button>
+            </td>
+        </tr>
+    </table>
+
+
+    <script src="jquery-3.14.min.js"></script>
+    <script>
+        $(function () {
+            function reg(reg, str, self) {
+                if (reg.test(str)) {
+                    self.siblings('span').html("恭喜您输入正确").css('color', 'green');
+                } else {
+                    self.siblings('span').html("不合法，请重新输入").css('color', 'red');
+                    self.focus();
+                }
+            }
+            $('.phone').focus();
+            $('.phone').blur(function () {
+                flag = reg(/^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/, $(this).val(), $(this));
+            });
+
+            $('.qq').blur(function () {
+                flag = reg(/^[1-9][0-9]{4,}$/, $(this).val(), $(this));
+            });
+
+            $('.nicheng').blur(function () {
+                flag = reg(/[\u4e00-\u9fa5\w]{3,}/, $(this).val(), $(this));
+            });
+
+            $('.yzm').blur(function () {
+                // 包含字母、数字和下划线，长度在6~18之间
+                flag = reg(/^\w{4,6}$/, $(this).val(), $(this));
+            });
+
+            $('.loginPassword').blur(function () {
+                // 以字母开头，长度在6~18之间，只能包含字母、数字和下划线
+                flag = reg(/^[a-zA-Z]\w{5,17}$/, $(this).val(), $(this));
+            });
+
+            $('.conPassword').blur(function() {
+                if (!$('.loginPassword').val()) {
+                    $(this).siblings('span').html("请先输入登录密码").css('color', 'red');
+                    $('.loginPassword').focus();
+                } else if ($(this).val() === $('.loginPassword').val()) {
+                    $(this).siblings('span').html("输入正确").css('color', 'green');
+                } else {
+                    $(this).siblings('span').html("与登录密码不一致，请重新输入").css('color', 'red');
+                    $(this).html("").focus();
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>
