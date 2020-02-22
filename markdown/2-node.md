@@ -256,7 +256,7 @@ console.log(4);
 后才会到这个异步队列中去取出来执行，显而易见，setTimeout(() => {console.log(2)}) 比 setTimeout(() => {console.log(3)}) 
 时间更快放到异步队列中，所以这个执行的结果为 1 4 2 3
 
-![avatar](https://img-blog.csdnimg.cn/20200219090440591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JlbnNoYW9xaQ==,size_16,color_FFFFFF,t_70)
+![git](https://img-blog.csdnimg.cn/20200219090440591.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3JlbnNoYW9xaQ==,size_16,color_FFFFFF,t_70)
 
 如果都是定时器倒是好判断，那如果是其它不同的异步任务放到一起，会是谁先执行呢？下面来看下这个例子
 
