@@ -353,3 +353,74 @@ require('a');
 5. 假如找到该名字的文件夹，会去该名字的问价下找 package.json 文件的 mian 选项指定的入口文件
 6. 假如没有找到该入口文件，则会去改名字的文件夹下找 index.js 
 7. 找不到 index.js 则会报错
+
+## node 创建服务器
+
+```javascript
+// 导入 http 模块
+const http = require('http');
+// 创建服务器
+const app = http.createServer((request, response) => {
+    response.writeHead(200, {
+        'content-type': 'text/html;charset=utf8'
+    })
+    response.end('hi, 你好');
+})
+// 监听端口
+app.listen(8801);
+```
+
+参数 get/post
+
+get 请求，参数会放置在浏览器地址栏中，可以借用 url 模块 parse 来处理
+
+```javascript
+const http = require('http');
+const url = require('url');
+
+const app = http.createServer((request, response) => {
+    response.writeHead(200, {
+        'content-type': 'text/html; charset=utf8'
+    });
+    // 获取客户端的账号密码
+    let { query } = url.parse(request.url, true);
+    request.end(`账号：${query.username}\n密码：${query.pwd}`)
+});
+
+app.listen(6688);
+```
+
+post 请求，参数是被放在请求体中进行传输
+
+```javascript
+const http = require('http');
+const url = require('url');
+const qs = require('querystring');
+
+const app = http.createServer((request, response) => {
+    response.writeHead(200, {
+        'content-type': 'text/html; charset=utf8'
+    });
+    // 监听参数传输事件
+    let postData = '';
+    request.on('data', (chunk) => {
+        postData += chunk;
+    });
+    request.on('end', () => {
+        console.log(postData);  // username=***&pwd=***
+        let {username, pwd} = qs.parse(postData);
+        console.log(username, pwd);
+    })
+
+    
+});
+
+app.listen(6688);
+
+```
+
+路由：客户端请求地址与服务器端程序代码的定义关系
+
+静态资源: 服务器不需要处理，可以直接响应给客户端
+
+动态资源: 
