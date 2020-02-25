@@ -41,6 +41,3 @@ Teacher.create({
     console.log(doc);
 });
 */
-
-// 查找
-
