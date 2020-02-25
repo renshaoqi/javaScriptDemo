@@ -1,4 +1,3 @@
-
 // node 连接 mongodb 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/school', { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
@@ -30,7 +29,7 @@ teacher.save()
 */
 
 // 方法二
-
+/*
 Teacher.create({
     name: 'lili',
     tel: '13737519134',
@@ -41,3 +40,7 @@ Teacher.create({
     // 打印成功的信息
     console.log(doc);
 });
+*/
+
+// 查找
+
