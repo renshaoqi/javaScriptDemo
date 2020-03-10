@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>模板引擎中使用判断和循环</title>
+</head>
+
+<body>
+    <div>
+        <!-- 判断用法 -->
+        {{ if age >= 16 }}
+            可以考大学泡妞啦
+        {{ else }}
+            老弟。。回去高中做个书呆子吧
+        {{ /if }}
+        <!-- 循环用法 -->
+        <ul>
+            {{ each students}}
+                <li>
+                    {{ $value.name }}
+                    {{ $value.age }}
+                    {{ $value.sex }}
+                </li>
+            {{ /each }}
+        </ul>
+
+    </div>
+</body>
+
+</html>

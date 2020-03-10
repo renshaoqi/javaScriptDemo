@@ -173,6 +173,7 @@ app.on('request', async (req, res) => {
             courses.forEach(item => {
 
                 let isExists = student.courses.includes(item);  // 判断是否包含该课程
+
                 if (isExists) {
                     editStr += `<input type="checkbox" name="courses" checked value="${item}"> ${item}`;
                 } else {
