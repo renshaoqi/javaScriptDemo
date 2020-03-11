@@ -1,0 +1,28 @@
+{
+  "name": "javaScript",
+  "version": "1.0.0",
+  "description": "- 面向过程（POP） > 分析问题所需要的步骤 - 面向对象（OOP） > 以功能对象划分问题 对象有属性和方法组成",
+  "main": "common.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renshaoqi/javaScriptDemo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/renshaoqi/javaScriptDemo/issues"
+  },
+  "homepage": "https://github.com/renshaoqi/javaScriptDemo#readme",
+  "dependencies": {
+    "art-template": "^4.13.2",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-art-template": "^1.0.1",
+    "jquery": "^3.4.1",
+    "mongoose": "^5.9.4"
+  }
+}
