@@ -116,3 +116,68 @@ app.post('/post', (req, res) => {
 });
 app.listen(7788);
 ```
+
+## 模块化路由
+
+route/home.js:用于存放模块路由的
+
+```javascript
+// 文件路径：/route/home.js
+// 导入相应的模块
+const express = require('express');
+// 创建路由对象
+const home = express.Router();
+// 创建二级路由
+home.get('/index', (req, res) => {
+    res.send('/home/index');
+});
+// 导出 home 这个模块
+module.exports = home;
+
+```
+
+```javascript
+// 文件路径：/route/admin.js
+// 导入模块
+const express = require('express');
+// 创建模块对象
+const admin = express.Router();
+// 创建二级路由
+admin.get('/index', (req, res) => {
+    res.send('/admin/index');
+});
+// 导出模块
+module.exports = admin;
+
+```
+
+下面来正式使用模块化路由
+
+```javascript
+// 1 先导入需要的模块
+const express = require('express');
+const home = require('./route/home.js');
+const admin = require('./route/admin.js');
+// 创建网站服务器
+const app = express();
+// 监听所需要的路由
+app.use('/home', home);
+app.use('/admin', admin);
+// 监听端口号
+app.listen(7788);
+```
+
+这样访问: localhost:7788/home/index  会执行home一级路由所在的 index 二级路由，其结果为：/home/index;以此类推。
+
+## 路由传参
+
+```javascript
+const express = require('express');
+const app = express();
+// 使用 :id 来传递参数
+app.get('/user/:id', (req, res) => {
+    res.send(req.params);   // 获取传递过来的参数 对象格式 {"id": "..."}
+})
+app.listen(7788);
+
+```
