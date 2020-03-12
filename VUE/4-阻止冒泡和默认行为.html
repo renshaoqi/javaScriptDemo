@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阻止默认行为和冒泡</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 阻止默认行为 方法二 使用属性.prevent -->
+        <a href="http://www.baidu.com" @click.prevent="handleClick">百度</a>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            methods: {
+                handleClick(event) {
+                    console.log(111);
+                    // 阻止默认行为  方法一
+                    // event.preventDefault();
+                }
+            }
+        })
+    </script>
+</body>
+</html>
