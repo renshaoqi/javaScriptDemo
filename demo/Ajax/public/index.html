@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1 创建 Ajax
+        let xhr = new XMLHttpRequest();
+        // 2 配置请求方式和请求路径
+        xhr.open('get', 'http://localhost:7788/jsonData');
+        // 3 发送请求
+        xhr.send();
+        // 4 监听请求
+        xhr.onload = function() {
+            // console.log(xhr.responseText);
+            // 服务器返回的都是字符串格式
+            // 转换 json 格式
+            let jsonData = JSON.parse(xhr.responseText);
+            console.log(jsonData);
+        }
+    </script>
+</body>
+</html>
