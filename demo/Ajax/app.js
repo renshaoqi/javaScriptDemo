@@ -6,7 +6,7 @@ const app = express();
 // 配置静态文件信息
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(bodyParser.urlencoded({extended: false}));
+// app.use(bodyParser.urlencoded({extended: false}));
 
 // app.get('/', (req, res) => {
 //     res.send('welcome');
