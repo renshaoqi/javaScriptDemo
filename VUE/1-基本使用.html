@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue 基本使用</title>
+</head>
+
+<body>
+    <!-- 2 view 视图层 -->
+    <div id="app">
+        <!-- 插值表达式 -->
+        {{msg}}
+    </div>
+    <!-- 1 导入vue -->
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        // 3 vm 相当于 viewmodel 视图数据层
+        let vm = new Vue({
+            el: "#app",  // 管理那个视图
+            data() {    // mode 数据层
+                return {
+                    msg: 'hello Vue'
+                }
+            }
+        });
+        vm.msg = 'hahaha';  // 数据驱动视图  也就是 数据改变，视图会自动更新
+    </script>
+</body>
+
+</html>

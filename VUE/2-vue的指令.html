@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue 的指令</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        1 v-cloak 解决页面闪烁问题，配合css一起使用
+        2 v-html  用于将数据填充到标签当中  优点：解决闪烁问题  支持标签 谨慎使用  既然能支持标签那就能支持script标签
+        3 v-text  用于将数据填充到标签当中 不支持标签
+        4 v-pre   显示原始信息
+        5 v-once  给标签只绑定数据一次，后面数据发生改变，标签的内容不会发生变化
+        6 v-model 双向数据绑定 用于表单  双向：视图改变数据，数据改变影响视图
+        7 v-bind:属性 简写 :属性  给标签的属性绑定值  单向绑定  数据改变影响视图
+     -->
+
+    <!-- 2 view 视图层 -->
+    <!-- <div id="app" v-cloak>
+        {{msg}}
+    </div> -->
+    <div id="app">
+        <div v-html="msg2"></div> <!--Vue-->
+        <div>{{msg2}}</div> <!--<h1>Vue</h1>-->
+        <div v-text="msg2"></div>   <!--<h1>Vue</h1>-->
+        <div v-pre>{{msg2}}</div>   <!--{{msg2}}-->
+        <input type="text" v-model="uname">
+        <!-- <input type="text" v-bind:value="uname"> -->
+        <!-- 简写 -->
+        <input type="text" :value="uname">
+    </div>
+    <!-- 1 导入vue -->
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        // 3 vm 相当于 viewmodel 视图数据层
+        let vm = new Vue({
+            el: "#app",  // 管理那个视图
+            data() {    // mode 数据层
+                return {
+                    msg: 'hello Vue',
+                    msg2: '<h1>Vue</h1>',
+                    uname: ''
+                }
+            }
+        });
+        vm.msg = 'hahaha';  // 数据驱动视图  也就是 数据改变，视图会自动更新
+    </script>
+</body>
+</html>
