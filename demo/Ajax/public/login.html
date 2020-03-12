@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    账号: <input type="text" name="uname" id="uname"> <br>
+    密码: <input type="password" name="pwd" id="pwd"> <br>
+    <input type="button" value="登录" id="btn">
+
+    <script>
+        let btn = document.getElementById('btn');
+        let uname = document.getElementById('uname');
+        let pwd = document.getElementById('pwd');
+        btn.onclick = function () {
+            /* get 请求
+            let xhr = new XMLHttpRequest();
+            let params = `uname=${uname.value}&pwd=${pwd.value}`;
+            xhr.open('get', 'http://localhost:7788/get?'+params);
+            xhr.send();
+            xhr.onload = function () {
+                let jsonData = JSON.parse(xhr.responseText);
+                console.log(jsonData);
+            */
+
+            // post 请求
+            let xhr = new XMLHttpRequest();
+            let params = `uname=${uname.value}&pwd=${pwd.value}`;
+            xhr.open('post', 'http://localhost:7788/post');
+            // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            // xhr.send(params);
+
+            // 使用 json 格式
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.send(JSON.stringify({
+                'uname': uname.value,
+                'pwd': pwd.value
+            }));
+
+            xhr.onload = function () {
+                let jsonData = JSON.parse(xhr.responseText);
+                console.log(jsonData);
+            }
+        }
+    </script>
+</body>
+
+</html>
