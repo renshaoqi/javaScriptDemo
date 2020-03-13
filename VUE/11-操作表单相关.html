@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>操作表单相关</title>
+</head>
+<body>
+    <div id="app">
+        <form action="">
+            <!-- .trim 去除前后空格  .lazy v-model 默认是没输入一个值就向数据绑定的，这样会消耗性能，而使用 lazy 等输入完后 再进行绑定 -->
+            <input type="text" v-model.trim.lazy="name">{{name}}
+            <!-- .number 表单修饰符 -->
+            <input type="text" v-model.number="age">
+            <input type="radio" value="1" v-model="sex" > 男
+            <input type="radio" value="0" v-model="sex" > 女
+            <input type="checkbox" v-model="skills" value="html" > HTML
+            <input type="checkbox" v-model="skills" value="vue" > VUE
+            <select v-model="city">
+                <option value="beijing">北京</option>
+                <option value="shanghai">上海</option>
+            </select>
+            <select v-model="city2" multiple>
+                <option value="beijing">北京</option>
+                <option value="shanghai">上海</option>
+            </select>
+            <textarea v-model="intro" cols="30" rows="10"></textarea>
+        </form>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    name: '',
+                    sex: '1',
+                    skills: ['html'],
+                    city: 'shanghai',
+                    city2: ['shanghai'],
+                    intro: '嘿嘿',
+                    age: 18
+                }
+            }
+        })
+    </script>
+</body>
+</html>

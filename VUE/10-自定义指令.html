@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-focus v-color="color" />
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        // 自定义全局指令
+        Vue.directive('focus', {
+            inserted: function(el) {
+                el.focus();
+            }
+        });
+
+        Vue.directive('color', {
+            bind: function(el, binding) {
+                el.style.color = binding.value;
+            }
+        })
+
+        let vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    color: 'red'
+                }
+            },
+            // 自定义局部指令
+            directives: {
+                
+            }
+        })
+    </script>
+</body>
+</html>
