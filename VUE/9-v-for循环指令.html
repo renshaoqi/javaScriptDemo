@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue v-for 循环指令</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(item, index) in students">
+                {{index}}-{{item.name}}-{{item.hobby}}
+            </li>
+        </ul>
+    </div>
+
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    students: [
+                        {
+                            id: 1,
+                            name: 'zs',
+                            age: 22,
+                            hobby: '🐟'
+                        },
+                        {
+                            id: 2,
+                            name: 'lisi',
+                            age: 20,
+                            hobby: '🍎'
+                        },
+                        {
+                            id: 3,
+                            name: 'wangwu',
+                            age: 18,
+                            hobby: '🍌'
+                        }
+                    ]
+                }
+            }
+        })
+    </script>
+</body>
+</html>
