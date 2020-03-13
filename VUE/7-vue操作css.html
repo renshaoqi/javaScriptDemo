@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue 操作css</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+        .className {
+            width: 200px;
+            height: 200px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <button @click="handler">切换</button><br>
+        <p :class="{hidden:isHidden}">嘿嘿</p>
+        <div :class="className">123</div>>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    isHidden: false,
+                    className: 'className'
+                }
+            },
+            methods: {
+                handler() {
+                    this.isHidden = !this.isHidden;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

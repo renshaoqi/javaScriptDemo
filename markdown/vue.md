@@ -85,3 +85,28 @@ let vm = new Vue({
     })
 </script>
 ```
+
+## v-model 实现双向数据绑定的原理
+
+```html
+<div id="app">
+    <input type="text" v-model="userName"/>
+    <input type="text" :value="userName" @input="handler"/>
+</div>
+<script src="vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                userName: ''
+            }
+        },
+        methods: {
+            handler(event) {
+                this.userName = event.target.value;
+            }
+        }
+    })
+</script>
+```
