@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>逻辑指令</title>
+</head>
+<body>
+    <div id="app">
+        <div v-if="xueli === '博士'">优秀</div>
+        <div v-if="xueli === '研究生'">人才</div>
+        <div v-if="xueli === '本科'">大众</div>
+        <div v-if="xueli === '专科'">继续努力</div>
+
+        <div v-show="xueli === '博士'">优秀</div>
+        <div v-show="xueli === '研究生'">人才</div>
+        <div v-show="xueli === '本科'">大众</div>
+        <div v-show="xueli === '专科'">继续努力</div>
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    xueli: '专科'
+                }
+            }
+        })
+    </script>
+</body>
+</html>
