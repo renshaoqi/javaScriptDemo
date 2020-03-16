@@ -115,3 +115,40 @@ let vm = new Vue({
     })
 </script>
 ```
+
+## vue computed 计算属性
+
+优点：计算属性具有缓存效果
+
+下面来看下字符串反转这个例子
+
+```html
+<div id="app">
+    {{reverseStr}}{{reverseStr}}{{reverseStr2()}}{{reverseStr2()}}
+</div>
+<script src="vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                msg: 'hello'
+            }
+        },
+        // 这里使用方法来实现字符串反转，这个方法没执行一次就调用一次
+        methods: {
+            reverseStr2: function() {
+                return this.msg.split('').reverse().join('');
+            }
+        },
+        // 这是计算属性的节点，调用一次之后，如果里面的数据没有变化，那么会使用缓存
+        computed: {
+            reverseStr: function() {
+                return this.msg.split('').reverse().join('');
+            }
+        }
+    })
+</script>
+```
+
+从上面的例子可看出，如果要实现多次某个功能的话，使用计算属性比使用方法好。因为计算属性具有缓存的效果

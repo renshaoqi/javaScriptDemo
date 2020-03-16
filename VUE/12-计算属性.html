@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue 计算属性</title>
+</head>
+
+<body>
+    <div id="app">
+        {{reverseStr}}{{reverseStr}}{{reverseStr2()}}{{reverseStr2()}}
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    msg: 'hello'
+                }
+            },
+            methods: {
+                reverseStr2: function () {
+                    console.log('methods')
+                    return this.msg.split('').reverse().join('');
+                }
+            },
+            // 计算属性 本质上是一个函数 实现某种功能或者得到某种结果 使用时当作数据属性来用
+            computed: {
+                reverseStr: function () {
+                    console.log('computed');
+                    return this.msg.split('').reverse().join('');
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
