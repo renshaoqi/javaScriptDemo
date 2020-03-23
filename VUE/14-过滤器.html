@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>过滤器</title>
+</head>
+<body>
+    <div id="app">
+        {{ info | upper }}
+        <!-- 传参 -->
+        {{ info| getSum(111) }}
+    </div>
+
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        Vue.filter('upper', function(val) {
+            return val.toUpperCase();
+        })
+        let vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    info: 'hello'
+                }
+            },
+            filters: {
+                getSum: function(val, str) {
+                    console.log(str);
+                }
+            }
+        })
+    </script>
+</body>
+</html>

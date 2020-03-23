@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命周期</title>
+</head>
+<body>
+    <div id="app">
+    {{info}}
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            //  在实例初始化之后，数据观测和 event / watcher 事件配置之前被调用
+            beforeCreate() {
+                console.log('beforeCreate');
+                // console.log(this);
+            },
+            data() {
+                return {
+                    info: 'china'
+                }
+            },
+            // 实例创建完后立即调用
+            created() {
+                console.log('created');
+            },
+            // 在挂载之前调用
+            beforeMount() {
+                
+            },
+            // 实例挂载后调用，这是 el 被新创建的 vm.$el 替换了
+            mounted() {
+
+            },
+            // 数据更新时调用，发生在虚拟 DOM 补丁之前。这里适合在更新之前访问现有的 DOM ，比如手动移除已添加的事件监听器
+            beforeUpdate() {
+
+            },
+            // 由于数据更改导致虚拟 DOM 重新渲染和打补丁，在这之后会调用该钩子函数。
+            updated() {
+
+            },
+            // 实例销毁之前调用
+            beforeDestroy() {
+
+            },
+            // 实例销毁后调用
+            destroyed() {
+                
+            }
+        })
+    </script>
+</body>
+</html>

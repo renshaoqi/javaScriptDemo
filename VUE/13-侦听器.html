@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue 侦听器</title>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="fristName">
+        <input type="text" v-model="lastName">
+        {{fullName}}
+        <!-- 使用 watch 模拟提交数据 -->
+        <input type="text" v-model.lazy="userName"> {{res}}
+
+    </div>
+    <script src="./node_modules/vue/dist/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    fristName: '',
+                    lastName: '',
+                    fullName: '',
+                    userName: '',
+                    res: '',
+                    obj: {
+                        a: 10
+                    }
+                }
+            },
+            methods: {
+                checkName(userName) {
+                    setTimeout(() => {
+                        if (userName === 'admin') {
+                            this.res = 'right'
+                        } else {
+                            this.res = 'wrong'
+                        }
+                    }, 2000)
+                }
+            },
+
+            // 侦听器 只能侦听data中的数据
+            watch: {
+                fristName: function (newStr, oldStr) {
+                    this.fullName = this.fristName + " " + this.lastName;
+                },
+                lastName: function () {
+                    this.fullName = this.fristName + " " + this.lastName;
+                },
+                userName(user) {
+                    this.checkName(user);
+                    this.res = 'checking...'
+                },
+                obj: {
+                    handler: function() {
+                        console.log(this.obj.a);
+                    },
+                    deep: true
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

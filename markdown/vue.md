@@ -152,3 +152,68 @@ let vm = new Vue({
 ```
 
 从上面的例子可看出，如果要实现多次某个功能的话，使用计算属性比使用方法好。因为计算属性具有缓存的效果
+
+## vue 侦听器
+
+绝大多数和计算属性一样的，但是如果用于出来异步请求或者开销比较大的就使用watch
+
+```html
+<div id="app">
+    <input type="text" v-model="fristName" >
+    <input type="text" v-model="lastName" >
+    {{fullName}}
+</div>
+<script src="vue.js"></script>
+<script>
+    let vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                fristName: '',
+                lastName: '',
+                fullName: ''
+            }
+        },
+        // 侦听器 只能监听data 中数据的变化
+        watch: {
+            fristName: function() {
+                this.fullName = this.fristName + this.lastName;
+            },
+            lastName() {
+                this.fullName = this.fristName + this.lastName;
+            }
+        }
+    })
+</script>
+```
+
+## 过滤器 filter
+
+```html
+<div id="app">
+    {{ info | upper }}
+    <!-- 传递参数 -->
+    {{ info | getSum('你好') }}
+</div>
+<script src="vue.js"></script>
+<script>
+    // 全局过滤器
+    Vue.filter('upper', function(val) {
+        return val.toUpperCase();
+    })
+    let vm = new Vue({
+        el: '#app',
+        data() {
+            return {
+                info: 'china'
+            }
+        },
+        // 局部过滤器
+        filters: {
+            getSum: function(val, str) {
+                console.log(str);   // 你好
+            }
+        }
+    })
+</script>
+```
