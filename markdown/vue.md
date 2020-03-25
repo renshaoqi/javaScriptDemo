@@ -217,3 +217,81 @@ let vm = new Vue({
     })
 </script>
 ```
+
+## 组件 component
+
+```html
+<div id="app">
+    <my-button></my-button>
+</div>
+<script src="vue.js"></script>
+<script>
+    // 定义全局组件
+    Vue.component('my-button', {
+        template: `<button @click="increase">普通按钮</button>`,
+        data() {
+            return {
+                num: 0
+            }
+        },
+        methods: {
+            increase() {
+                this.num++
+            }
+        }
+    })
+
+    new Vue({
+        el: '#app'
+    })
+</script>
+```
+
+### 组件命名
+
+组件命名方式分为两种
+
+- 短横线命名  my=button
+- 驼峰式命名  MyButton
+
+如果是驼峰式命名，使用组件时，只能在字符串模板中使用，不能在普通标签模板中使用
+
+而短横线命名的，可以在字符串模板中使用，也可以在普通标签模板中使用
+
+
+```html
+<div id="app">
+    <my-button></my-button>
+    <MyButton></MyButton>   <!-- 报错 -->
+</div>
+<script src="vue.js"></script>
+<script>
+    // 定义全局组件
+    Vue.component('MyButton', {
+        template: `
+            <div>
+                <button @click="increase">普通按钮</button>
+                <MyButton></MyButton>
+            </div>
+        `,
+        data() {
+            return {
+                num: 0
+            }
+        },
+        methods: {
+            increase() {
+                this.num++
+            }
+        }
+    })
+
+    Vue.component('MyComp', {
+        template: '<h1>MyComp</h1>'
+    })
+
+    new Vue({
+        el: '#app'
+    })
+</script>
+```

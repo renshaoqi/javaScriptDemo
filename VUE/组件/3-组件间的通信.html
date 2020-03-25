@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div :style="{fontSize: fontSize+'px'}">内容</div>
+        <child :pmsg="parentMsg" text="hello" :hobbies="hobbies" @enlarge-text="handle"></child>
+    </div>
+    <script>
+        /*
+            父组件数据传递给子组件  父传子
+            步骤：
+                1 在父组件标签模板中 以属性的形式绑定到子组件标签身上
+                2 在子组件中 通过 props 接收 注意：props 中只能用驼峰式，不能用短横线的
+            
+            子传父
+
+        */
+
+        Vue.component('child', {
+            props: ['pmsg', 'text', 'hobbies'],
+            template: `
+                <div>
+                    child--{{pmsg}}--{{text}}
+                    <ul>
+                        <li v-for="(item,index) in hobbies" :key="index">
+                            {{index}}--{{item}}
+                        </li>
+                    </ul>
+                    <button @click="enlarge">增大父组件的字号</button>
+                </div>`,
+            methods: {
+                enlarge() {
+                    this.$emit('enlarge-text', 10); // 触发事件
+                }
+            }
+        })
+
+        // 根组件
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    parentMsg: 'parentMsg',
+                    hobbies: ['conding', 'running', 'eating'],
+                    fontSize: 12
+                }
+            },
+            methods: {
+                handle() {
+                    let arr = [...arguments];
+                    this.fontSize += arr[0];
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

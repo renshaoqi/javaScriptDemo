@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>组件的基本使用</title>
+</head>
+
+<body>
+    <div id="app">
+        <my-button></my-button>
+        <!-- <mybutton></mybutton>  报错 -->
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        // 定义全局组件
+        /*
+            定义组件时  组件命名可以是短横线，也可以是驼峰式命名
+            1 假如是驼峰式命名 使用组件时 只能在字符串模板中使用，不能在普通标签模板中使用，而普通标签模板中只能使用短横线方式的组件
+        */
+        Vue.component('MyButton', {
+            // template 确保根元素只有一个
+            template: `
+                <div>
+                    <button @click="increase">普通按钮{{num}}</button>
+                    <MyComp></MyComp>
+                </div>
+            `,
+            // 这里为什么一定要使用函数而不能使用对象呢， 因为每个组件间要独立的，函数就能实现，而对象就不能
+            data() {
+                return {
+                    num: 0
+                }
+            },
+            methods: {
+                increase() {
+                    this.num++;
+                }
+            }
+        })
+        Vue.component('MyComp', {
+            template: '<h1>myComp</h1>'
+        })
+        new Vue({
+            el: '#app'
+        })
+    </script>
+</body>
+
+</html>
