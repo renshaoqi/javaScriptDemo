@@ -218,7 +218,7 @@ let vm = new Vue({
 </script>
 ```
 
-## 组件 component
+# 组件 component
 
 ```html
 <div id="app">
@@ -292,6 +292,154 @@ let vm = new Vue({
 
     new Vue({
         el: '#app'
+    })
+</script>
+```
+
+# 组件间的数据通信
+
+通信分为两种
+
+1. 父组件传递给子组件
+
+```html
+<div id="app">
+    <my-button :info="info"></my-button>
+</div>
+<script src="vue.js"></script>
+<script>
+    // 定义全局组件
+    Vue.component('my-button', {
+        // 通过 props 接收
+        props: ['info'],
+        template: `
+            <div>
+                <button>子组件{{info}}</button>
+            </div>
+        `
+    })
+    // 根组件
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                info: '父组件'
+            }
+        }
+    })
+</script>
+```
+
+2. 子组件传递给父组件
+
+点击子组件按钮 使得父组件内容增大
+
+```html
+<div id="app">
+    <div :style="{fontSize:fontSize+'px'}">父组件内容</div>
+    <child @enlarge-text="enlarge"></child>
+</div>
+<script src="vue.js"></script>
+<script>
+    Vue.component('child', {
+        template: `
+            <div>
+                <button @click="en">增大父组件内容字号</button>
+            </div>
+        `,
+        methods: {
+            en() {
+                this.$emit('enlarge-text', 10);
+            }
+        }
+    })
+
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                fontSize: 12
+            }
+        },
+        methods: {
+            enlarge() {
+                let arr = [...arguments]
+                this.fontSize += arr[0];
+            }
+        }
+    })
+</script>
+```
+
+3. 兄弟组件间的通信
+
+```html
+<div id="app">
+    <test1></test1>
+    <test2></test2>
+    <button @click="destory">销毁test1</button>
+</div>
+<script src="vue.js"></script>
+<script>
+    // 事件中心
+    let vm = new Vue();
+    Vue.component('test1', {
+        data() {
+            return {
+                a: 0
+            }
+        },
+        template: `
+            <div>
+                <p>test1 -- {{a}}</p>
+                <p>
+                    <button @click="handler">点击</button>
+                </p>
+            </div>
+        `,
+        methods: {
+            handler() {
+                vm.$emit('test2-event', 3);
+            }
+        },
+        mounted(){
+            vm.$on('test1-event', (val) => {
+                this.a += val;
+            })
+        }
+    });
+    Vue.component('test2', {
+        data() {
+            return {
+                a: 0
+            }
+        },
+        template: `
+            <div>
+                <p>test2 -- {{a}}</p>
+                <p>
+                    <button @click="handler">点击</button>
+                </p>
+            </div>
+        `,
+        methods: {
+            handler() {
+                vm.$emit('test1-event', 2);
+            }
+        },
+        mounted() {
+            vm.$on('test2-event', (val) => {
+                this.a += val;
+            })
+        }
+    });
+    new Vue({
+        el: '#app',
+        methods: {
+            destory() {
+                vm.$off('test2-event');
+            }
+        }
     })
 </script>
 ```

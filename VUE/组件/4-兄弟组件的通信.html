@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <test1></test1>
+        <test2></test2>
+        <button @click="destroy">销毁test1</button>
+    </div>
+    <script>
+        // 事件中心
+        let vm = new Vue();
+
+        Vue.component('test1', {
+            data() {
+                return {
+                    a: 0
+                }
+            },
+            template: `
+                <div>
+                    <p>test1  {{a}}</p>
+                    <p>
+                        <button @click="handler">点击</button>
+                    </p>
+                </div>
+            `,
+            methods: {
+                handler(val) {
+                    vm.$emit('test2-event', 3);
+                }
+            },
+            mounted() {
+                vm.$on('test1-event', (val)=> {
+                    this.a += val;
+                })
+            }
+        });
+        Vue.component('test2', {
+            data() {
+                return {
+                    a: 0
+                }
+            },
+            template: `
+                <div>
+                    <p>test2  {{a}}</p>
+                    <p>
+                        <button @click="handler">点击</button>
+                    </p>
+                </div>
+            `,
+            methods: {
+                handler(val) {
+                    vm.$emit('test1-event', 2);
+                }
+            },
+            mounted() {
+                vm.$on('test2-event', (val) => {
+                    this.a += val;
+                })
+            }
+        });
+
+        new Vue({
+            el: '#app',
+            methods: {
+                destroy() {
+                    vm.$off('test2-event');
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
