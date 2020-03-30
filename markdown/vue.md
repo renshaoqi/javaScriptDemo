@@ -443,3 +443,70 @@ let vm = new Vue({
     })
 </script>
 ```
+
+## 组件插槽
+
+1. 匿名插槽
+
+```html
+<div id="app">
+    <base-layout>
+        123
+    </base-layout>
+</div>
+<script src="vue.js"></script>
+<script>
+    Vue.component('base-layout', {
+        template: `
+            <div>
+                <solt>默认值</solt>
+            </div
+        `
+    })
+
+    new Vue({
+        el: '#app'
+    })
+</script>
+```
+
+2. 具名插槽
+
+```html
+<div id="app">
+    <base-layout>
+        <template v-slot:header>
+            <p>头部1</p>
+            <p>头部2</p>
+        </template>
+        <template v-slot:main>主体</template>
+        <template v-slot:footer>头部</template>
+    </base-layout>
+</div>
+<script src="vue.js"></script>
+<script>
+    Vue.component('base-layout', {
+        template: `
+            <div>
+                <header>
+                    <slot name='header'></slot>
+                </header>
+                <main>
+                    <slot name='main'></slot>
+                </main>
+                <footer>
+                    <slot name='footer'></slot>
+                </footer>
+            </div
+        `
+    })
+
+    new Vue({
+        el: '#app'
+    })
+</script>
+```
+
+3. 作用域插槽
+
+

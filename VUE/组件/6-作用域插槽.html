@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+
+    <style>
+        .red{
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <cars-list :cars="cars">
+            <template v-slot:default="slotProps">
+                <p v-if="slotProps.info.id==2" class="red">
+                    {{ slotProps.info.name }}
+                </p>
+            </template>
+        </cars-list>
+    </div>
+    <script>
+        Vue.component('cars-list', {
+            props: ['cars'],
+            template: `
+                <div>
+                    <ul>
+                        <li v-for='item in cars' :key='item.id'>
+                            <slot :info='item'>{{ item.name }}</slot>
+                        </li>
+                    </ul>
+                </div>
+            `
+        })
+
+        let vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    cars: [
+                        {
+                            id: 1,
+                            name: '宝马'
+                        },
+                        {
+                            id: 2,
+                            name: '奔驰'
+                        },
+                        {
+                            id: 3,
+                            name: '奥迪'
+                        }
+                    ]
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
