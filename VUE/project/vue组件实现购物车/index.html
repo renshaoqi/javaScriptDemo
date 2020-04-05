@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue 组件实现购物车</title>
+    <style>
+        .warp {
+            width: 300px;
+            margin: auto;
+        }
+
+        .title {
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            background-color: turquoise;
+        }
+
+        .total {
+            height: 50px;
+            line-height: 50px;
+            text-align: right;
+            background-color: #ababab;
+        }
+
+        .total span {
+            font-size: 16px;
+            font-weight: 700;
+            color: red;
+        }
+
+        .total button {
+            border: none;
+            margin: 0 5px;
+            width: 40px;
+            height: 40px;
+            border-radius: 6px;
+        }
+
+        .total button:hover {
+            color: white;
+            background-color: skyblue;
+            cursor: pointer;
+        }
+
+        .item {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .item li {
+            height: 50px;
+            line-height: 50px;
+            position: relative;
+            background-color: aquamarine;
+            border-bottom: 1px solid #ababab;
+        }
+
+        .item li img {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            left: 0;
+            top: 4px;
+        }
+
+        .item li .name {
+            position: absolute;
+            left: 45px;
+            top: 0;
+        }
+
+        .item li .change {
+            position: absolute;
+            right: 50px;
+            top: 0;
+        }
+
+        .item li .change a {
+            text-decoration: none;
+            width: 20px;
+            height: 20px;
+        }
+
+        .item li .change .num {
+            width: 30px;
+        }
+
+        .item li .remove {
+            position: absolute;
+            right: 5px;
+            top: 10px;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <my-cart></my-cart>
+    </div>
+
+    <script src="../../node_modules/vue/dist/vue.js"></script>
+    <script>
+        // 定义局部的购物车 头部组件
+        let CartTitle = {
+            props: ['username'],
+            template: `
+                <div class='title'>{{username}}的购物车</div>
+            `
+        }
+
+        // 定义购物车 商品列表组件
+        let CartList = {
+            props: ['list'],
+            template: `
+                <div>
+                    <ul class='item'>
+                        <li v-for='item in list' :key='item.id'>
+                            <img :src='item.img' />
+                            <div class='name'>{{item.name}}</div>
+                            <div class='change'>
+                                <a href='' @click.prevent='sub(item.id)'>-</a>
+                                <input type='text' class='num' v-model='item.num' @blur='change(item.id, $event)' />
+                                <a href='' @click.prevent='add(item.id)'>+</a>
+                            </div>
+                            <div class='remove' @click='del(item.id)'>×</div>
+                        </li>
+                    </ul>
+                </div>
+            `,
+            methods: {
+                del(id) {
+                    this.$emit('remove-cart', id)
+                },
+                sub(id) {
+                    this.$emit('change-num', {
+                        id,
+                        flag: 'sub'
+                    })
+                },
+                add(id) {
+                    this.$emit('change-num', {
+                        id,
+                        flag: 'add'
+                    })
+                },
+                change(id, event) {
+                    this.$emit('change-num', {
+                        id,
+                        flag: 'change',
+                        num: event.target.value
+                    })
+                }
+            }
+        }
+
+        // 定义购物车 尾部组件
+        let CartTotal = {
+            props: ['list'],
+            computed: {
+                getTotal() {    // 定义总价的计算属性
+                    // 定义总价格
+                    let sum = 0;
+                    this.list.forEach(item => {
+                        sum += item.price * item.num;
+                    });
+                    return sum;
+                }
+            },
+            template: `
+                <div class='total'>
+                    <span>总价: {{getTotal}}</span>
+                    <button>结算</button>
+                </div>
+            `
+        }
+
+
+        // 定义购物车组件
+        Vue.component('my-cart', {
+            template: `
+                <div class='warp'>
+                    <cart-title :username='username'></cart-title>
+                    <cart-list :list='list' @remove-cart='delCart' @change-num='changeNum'></cart-list>
+                    <cart-total :list='list'></cart-total>
+                </div>
+            `,
+            components: {
+                'cart-title': CartTitle,
+                'cart-list': CartList,
+                'cart-total': CartTotal
+            },
+            data() {
+                return {
+                    username: 'R先生',
+                    list: [
+                        {
+                            id: 1,
+                            name: '奥迪',
+                            img: 'timg.jpg',
+                            num: 1,
+                            price: 50000
+                        },
+                        {
+                            id: 2,
+                            name: '机械键盘',
+                            img: 'jx.jpg',
+                            num: 1,
+                            price: 200
+                        },
+                        {
+                            id: 3,
+                            name: 'vivo 手机',
+                            img: 'vivo.jpg',
+                            num: 1,
+                            price: 5000
+                        }
+                    ]
+                }
+            },
+            methods: {
+                delCart(id){
+                    let i = this.list.findIndex(item => {
+                        return item.id === id;
+                    });
+                    this.list.splice(i, 1);
+                },
+                changeNum(obj) {
+                    if (obj.flag === 'sub') {
+                        // 进行减少操作
+                        this.list.some(item => {
+                            if (item.id === obj.id) {
+                                item.num--;
+                                return true;
+                            }
+                        });
+                    } else if (obj.flag === 'add') {
+                        // 进行添加操作
+                        this.list.some(item => {
+                            if (item.id === obj.id) {
+                                item.num++;
+                                return true;
+                            }
+                        })
+                    } else if (obj.flag === 'change') {
+                        this.list.some(item => {
+                            if(item.id === obj.id) {
+                                item.num = obj.num;
+                                return true;
+                            }
+                        })
+                    }
+                }
+            }
+        })
+        new Vue({
+            el: '#app'
+        })
+
+    </script>
+</body>
+
+</html>
