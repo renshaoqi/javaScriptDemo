@@ -33,8 +33,19 @@ app.get('/stu', (req, res) => {
 
 app.post('/stu', (req, res) => {
     res.send(req.body)
+});
+
+app.get('/user/:id', (req, res) => {
+    res.send(req.params.id);
+});
+
+app.get('/user', (req, res) => {
+    res.send(req.query.id);
+});
+
+
+app.post('/user', (req, res) => {
+    res.send(req.body);
 })
-
-
 
 app.listen(3000);
