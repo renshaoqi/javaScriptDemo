@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fetch 使用</title>
+</head>
+<body>
+    <script>
+        // get 基本使用
+        /*
+        fetch('http://127.0.0.1:3000/data', {
+            method: 'get'
+        }).then((data) => {
+            console.log(data)
+            return data.text();
+        }).then((data) => {
+            console.log(data)
+        });
+        */
+
+        // get 传递参数 restful 方式
+        /*
+        fetch('http://127.0.0.1:3000/data/1001', {
+            method: 'get'
+        }).then((data) => {
+            return data.text();
+        }).then((data) => {
+            console.log(data)
+        });
+        */
+
+        // get 传递参数 传统方式
+        /*
+        fetch('http://127.0.0.1:3000/stu?id=1002', {
+            method: 'get'
+        }).then((data) => {
+            return data.text();
+        }).then((data) => {
+            console.log(data)
+        });
+        */
+
+        // post 请求 方式一
+        /*
+        fetch('http://127.0.0.1:3000/stu', {
+            method: 'post',
+            body: 'a=10&b=20',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then((data) => {
+            return data.text();
+        }).then((data) => {
+            console.log(data)
+        });
+        */
+
+        // post 请求 方式二
+        fetch('http://127.0.0.1:3000/stu', {
+            method: 'post',
+            body: JSON.stringify({
+                a: 10,
+                b: 20
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((data) => {
+            return data.text();
+        }).then((data) => {
+            console.log(data)
+        });
+        
+    </script>
+</body>
+</html>
