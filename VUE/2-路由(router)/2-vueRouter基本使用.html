@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue router 基本使用</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/home">首页</router-link>
+        <router-link to="/news">新闻</router-link>
+        <!-- 路由占位符 -->
+        <router-view></router-view>
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+        let Home = {
+            template: `
+                <div>
+                    <h1>首页板块</h1>
+                </div>
+            `
+        }
+        let News = {
+            template: `
+                <div>
+                    <h1>新闻板块</h1>
+                </div>
+            `
+        }
+
+        const router = new VueRouter({
+            // 定义路由规则
+            routes: [
+                {
+                    path: '/home',
+                    component: Home
+                },
+                {
+                    path: '/news',
+                    component: News
+                }
+            ]
+        })
+
+        new Vue({
+            el: '#app',
+            router
+        })
+    </script>
+</body>
+
+</html>

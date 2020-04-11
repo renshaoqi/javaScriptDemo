@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue 动态路由匹配</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/news/1">新闻1</router-link>
+        <router-link to="/news/2">新闻2</router-link>
+        <router-link to="/news/3">新闻3</router-link>
+        <!-- 路由占位符 -->
+        <router-view></router-view>
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+        let Home = {
+            template: `
+                <div>
+                    <h1>首页板块</h1>
+                </div>
+            `
+        }
+        let News = {
+            props: ['id', 'a', 'b'],
+            template: `
+                <div>
+                    <h1>新闻板块{{id}}{{a+b}}</h1>
+                </div>
+            `
+        }
+
+        const router = new VueRouter({
+            // 定义路由规则
+            routes: [
+                {
+                    path: '/',
+                    redirect: '/news/1'
+                },
+                {
+                    path: '/news/:id',
+                    component: News,
+                    props: (route) => {
+                        return {
+                            a: 10,
+                            b: 20,
+                            id: route.params.id
+                        }
+                    }
+                }
+            ]
+        })
+
+        new Vue({
+            el: '#app',
+            router
+        })
+    </script>
+</body>
+
+</html>

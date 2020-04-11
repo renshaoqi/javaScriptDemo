@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue 嵌套路由</title>
+</head>
+<body>
+    <div id="app">
+        <router-link to='/home'>首页</router-link>
+        <router-link to='/news'>新闻</router-link>
+        <router-view></router-view>
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script src="../node_modules/vue-router/dist/vue-router.js"></script>
+    <script>
+        let Home = {
+            template: `
+                <div>
+                    <h1>首页板块</h1>    
+                </div>
+            `
+        };
+        let News = {
+            template: `
+                <div>
+                    <h1>新闻板块</h1> 
+                    <router-link to='/news/foreign'>国外</router-link>
+                    <router-link to='/news/china'>国内</router-link>
+                    <router-view></router-view>
+                </div>
+            `
+        };
+        let ForeignNews = {
+            template: `
+                <h1>外国人眼中的公司</h1>
+            `
+        };
+        let ChinaNews = {
+            template: `
+                <h1>国人眼中的公司</h1>
+            `
+        };
+        const router = new VueRouter({
+            routes: [
+                {
+                    path: '/home',
+                    component: Home
+                },
+                {
+                    path: '/news',
+                    component: News,
+                    children: [
+                        {
+                            path: '/news/foreign',
+                            component: ForeignNews
+                        },
+                        {
+                            path: '/news/china',
+                            component: ChinaNews
+                        }
+                    ]
+                }
+            ]
+        })
+        new Vue({
+            el: '#app',
+            router
+        })
+    </script>
+</body>
+</html>

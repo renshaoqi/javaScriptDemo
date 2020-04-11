@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue 路由基本使用</title>
+</head>
+
+<body>
+    <div id="app">
+        <a href="#/home">首页</a>
+        <a href="#/news">新闻</a>
+        <a href="#/products">产品</a>
+        <a href="#/about">关于我们</a>
+        <component :is="compName"></component>
+    </div>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <script>
+        // 定义组件
+        let home = {
+            template: `
+                <div>
+                    <h1>首页板块</h1>    
+                </div>
+            `
+        };
+        let news = {
+            template: `
+                <div>
+                    <h1>新闻板块</h1>    
+                </div>
+            `
+        };
+        let products = {
+            template: `
+                <div>
+                    <h1>产品板块</h1>    
+                </div>
+            `
+        };
+        let about = {
+            template: `
+                <div>
+                    <h1>关于我们</h1>    
+                </div>
+            `
+        };
+        let vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    compName: 'home'
+                }
+            },
+            components: {
+                home,
+                news,
+                products,
+                about
+            }
+        });
+        // 监听hash值变化
+        window.onhashchange = function () {
+            let hash = location.hash.slice(2);
+            switch (hash) {
+                case 'home':
+                    vm.compName = 'home';
+                    break;
+                case 'news':
+                    vm.compName = 'news';
+                    break;
+                case 'products':
+                    vm.compName = 'products';
+                    break;
+                case 'about':
+                    vm.compName = 'about';
+                    break;
+            }
+        }
+    </script>
+</body>
+
+</html>
