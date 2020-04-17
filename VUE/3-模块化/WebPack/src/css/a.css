@@ -1,0 +1,13 @@
+body {
+    background-color: turquoise;
+}
+
+::placeholder {
+    color: red;
+}
+
+.box {
+    width: 100px;
+    height: 100px;
+    background: red url(../img/sss.png);
+}
